@@ -21,16 +21,22 @@ public final class Complex {
 
     public static Complex toComplex(String string) { //Convertation of string into complex
         double real, imaginary;
-        if (string.matches("\\d+(.\\d+)?\\+\\d+(.\\d+)?i")) {
+        if (string.matches("(-)?\\d+(.\\d+)?\\+\\d+(.\\d+)?i")) {
             String[] splt = string.split("\\+");
             real = Double.parseDouble(splt[0]);
             imaginary = Double.parseDouble(splt[1].substring(0, splt[1].length() - 1));
             return new Complex(real, imaginary);
         }
-        else if (string.matches("\\d+(.\\d+)?-\\d+(.\\d+)?i")) {
+        else if (string.matches("(-)?\\d+(.\\d+)?-\\d+(.\\d+)?i")) {
             String[] splt = string.split("-");
-            real = Double.parseDouble(splt[0]);
-            imaginary = Double.parseDouble(splt[1].substring(0, splt[1].length() - 1));
+            if (!string.startsWith("-")) {
+                real = Double.parseDouble(splt[0]);
+                imaginary = -Double.parseDouble(splt[1].substring(0, splt[1].length() - 1));
+            }
+            else {
+                real = -Double.parseDouble(splt[1]);
+                imaginary = -Double.parseDouble(splt[2].substring(0, splt[2].length() - 1));
+            }
             return new Complex(real, imaginary);
         }
         else if (string.matches("(-)?\\d+(.\\d+)?")) {

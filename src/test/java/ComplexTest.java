@@ -11,9 +11,29 @@ public class ComplexTest {
         Assertions.assertEquals(expected.getIm(), actual.getIm(), eps);
     }
 
+
+    @Test
+    void getReTest() {
+        Assertions.assertEquals(-8.5, new Complex(-8.5, 7).getRe());
+    }
+
+    @Test
+    void getImTest() {
+        Assertions.assertEquals(11.4, new Complex(5, 11.4).getIm());
+    }
+
     @Test
     void toComplexTest() {
         assertEqualsComplex(new Complex(3, 7), toComplex("3+7i"), 1e-10);
+        assertEqualsComplex(new Complex(-5, -6), toComplex("-5-6i"), 1e-10);
+        assertEqualsComplex(new Complex(6, 0), toComplex("6"), 1e-10);
+        assertEqualsComplex(new Complex(0, -8), toComplex("-8i"), 1e-10);
+
+
+        IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            toComplex("hello world");
+                });
+        Assertions.assertEquals("String inconvertible to complex", exception.getMessage());
     }
 
     @Test
@@ -50,5 +70,8 @@ public class ComplexTest {
     @Test
     void complexToStringTest() {
         Assertions.assertEquals("6.0+4.0i", new Complex(6, 4).toString());
+        Assertions.assertEquals("-5.0-17.0i", new Complex(-5, -17).toString());
+        Assertions.assertEquals("-7.0", new Complex(-7, 0).toString());
+        Assertions.assertEquals("-6.0i", new Complex(0, -6).toString());
     }
 }
